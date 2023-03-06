@@ -1,0 +1,49 @@
+﻿@{
+  ViewData["Title"] = "People";
+}
+
+<div id="app">
+  <p-datatable :value="people">
+    <p-column field="FirstName" header="First Name"></p-column>
+    <p-column field="LastName" header="Last Name"></p-column>
+    <p-column field="Address" header="Address"></p-column>
+    <p-column field="Birthday" header="Birthday"></p-column>
+  </p-datatable>
+</div>
+
+
+@section Scripts {  
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="https://unpkg.com/primevue/core/core.min.js"></script>
+  <script src="https://unpkg.com/primevue/datatable/datatable.min.js"></script>
+  <script src="https://unpkg.com/primevue/column/column.min.js"></script>
+
+
+  <script type="module">
+    const { createApp, onMounted, ref } = Vue;
+
+    const App = {
+      setup() {
+        onMounted(() => {
+          fetch('people/get').then(res => res.json()).then(data => people.value = data)
+        })
+
+        const people = ref();
+
+        return { people }
+      },
+      components: {
+        "p-datatable": primevue.datatable,
+        "p-column": primevue.column
+      }
+    };
+
+    const app = createApp(App);
+    app.use(primevue.config.default);
+    app.mount("#app");
+  </script>
+}
+
+@section Styles {
+  <link href="https://unpkg.com/primevue/resources/themes/lara-light-indigo/theme.css" rel="stylesheet">
+}

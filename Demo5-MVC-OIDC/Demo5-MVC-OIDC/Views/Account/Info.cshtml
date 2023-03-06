@@ -1,0 +1,18 @@
+﻿@using System.Security.Claims;
+@model IEnumerable<Claim>
+
+@{
+  ViewData["Title"] = "Info o korisniku";
+}
+
+<ol class="list-group list-group-numbered">
+  @foreach(var claim in Model)
+  {
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">@claim.Type</div>
+        @claim.Value
+      </div>
+    </li>
+  }
+</ol>
